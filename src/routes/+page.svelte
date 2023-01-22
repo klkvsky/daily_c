@@ -6,6 +6,41 @@
 	let inputValue = 'Ethereum';
 </script>
 
+<svelte:head>
+	<title>CoinRotator - Search</title>
+	<meta name="title" content="CoinRotator - Search" />
+	<meta
+		name="description"
+		content="D_003: CoinRotator - Search; Design: @predragus; Thank to you all for checking it out"
+	/>
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://daily-c.vercel.app/" />
+	<meta property="og:title" content="CoinRotator - Search" />
+	<meta
+		property="og:description"
+		content="D_003: CoinRotator - Search; Design: @predragus; Thank to you all for checking it out"
+	/>
+	<meta
+		property="og:image"
+		content="https://pbs.twimg.com/media/FnFlN4eXwAI-9rV?format=jpg&name=4096x4096"
+	/>
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:url" content="https://daily-c.vercel.app/" />
+	<meta property="twitter:title" content="CoinRotator - Search" />
+	<meta
+		property="twitter:description"
+		content="D_003: CoinRotator - Search; Design: @predragus; Thank to you all for checking it out"
+	/>
+	<meta
+		property="twitter:image"
+		content="https://pbs.twimg.com/media/FnFlN4eXwAI-9rV?format=jpg&name=4096x4096"
+	/>
+</svelte:head>
+
 <main class="bg-[#F8F9FA] w-screen h-screen grid place-items-center">
 	<div
 		class={`w-[520px] h-fit overflow-hidden bg-[#FFFFFF] rounded-[12px] border border-[#D7DBDF] shadow-[0_10px_40px_-20px_rgba(17,24,28,0.12),0_1px_12px_rgba(17,24,28,0.12),0_2px_4px_-1px_rgba(17,24,28,0.04)] flex flex-col transition-all duration-500 ease-in-out origin-top ${
@@ -28,7 +63,7 @@
 				/>
 			</svg>
 			<input
-        id="text"
+				id="text"
 				type="text"
 				bind:value={inputValue}
 				class="w-full text-[#11181C] font-medium text-[16px] ml-[6px] outline-none"
@@ -45,7 +80,7 @@
 				on:click={() => {
 					inputValue = '';
 					isTyping = true;
-          document.getElementById("text").focus();
+					document.getElementById('text').focus();
 				}}
 			>
 				<svg
