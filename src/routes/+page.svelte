@@ -2,6 +2,8 @@
 	let activeElement = 1;
 	let isInField = false;
 	let isTyping = false;
+
+	let inputValue = 'Ethereum';
 </script>
 
 <main class="bg-[#F8F9FA] w-screen h-screen grid place-items-center">
@@ -26,8 +28,9 @@
 				/>
 			</svg>
 			<input
+        id="text"
 				type="text"
-				value="Ethereum"
+				bind:value={inputValue}
 				class="w-full text-[#11181C] font-medium text-[16px] ml-[6px] outline-none"
 				on:focusin={() => {
 					isTyping = true;
@@ -39,6 +42,11 @@
 
 			<button
 				class="hover:scale-[1.1] transition-all duration-500 ease-in-out group/delete group-focus-within:opacity-0 group-focus-within:scale-[.25]"
+				on:click={() => {
+					inputValue = '';
+					isTyping = true;
+          document.getElementById("text").focus();
+				}}
 			>
 				<svg
 					width="18"
