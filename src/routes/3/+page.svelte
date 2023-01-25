@@ -63,8 +63,8 @@
 	<p class="text-[20px]">This is easier said than done, obviously. But I’ll give my best!</p>
 </div>
 <div
-	class={`fixed top-0 left-0 w-screen h-screen bg-[#FFFFFF0A] backdrop-blur-[10px] z-10 transition-all duration-500 ease-in-out ${
-		status === 'deleted' || status === 'candeled' ? 'pointer-events-none opacity-0' : ''
+	class={`fixed top-0 left-0 w-screen h-screen bg-[#FFFFFF0A] backdrop-blur-[10px] z-10 transition-all duration-500 ease-in-out pointer-events-none ${
+		status === 'deleted' || status === 'candeled' ? 'opacity-0' : ''
 	}`}
 />
 <img
