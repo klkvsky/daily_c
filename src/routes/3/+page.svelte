@@ -140,8 +140,8 @@
 									<button
 										class={`rounded-[6px] px-[12px] py-[8px] bg-[#B8122E] border border-[#DFEFFE1F] backdrop-blur-[1px] relative overflow-hidden group hover:scale-[1.05] transition-all ease-in-out duration-300 ${
 											typedText === 'predragus-workspace'
-												? 'scale-100 opacity-100'
-												: 'scale-[.9] opacity-50 pointer-events-none'
+												? 'opacity-100'
+												: 'opacity-50 pointer-events-none'
 										}`}
 										on:click={() => {
 											status = 'deleted';
