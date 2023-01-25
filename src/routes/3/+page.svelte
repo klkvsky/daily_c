@@ -80,8 +80,8 @@
 			status === 'deleted'
 				? 'translate-y-[150%] scale-[0.1] pointer-events-none opacity-0 z-30'
 				: ''
-		} transition-all duration-700 relative ease-in-out ${
-			status === 'candeled' ? '-translate-y-[300%] scale-[1.5] pointer-events-none z-30' : ''
+		} transition-all duration-700 relative ease-in-out z-30 ${
+			status === 'candeled' ? '-translate-y-[300%] scale-[1.5] pointer-events-none' : ''
 		} `}
 	>
 		<div
