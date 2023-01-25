@@ -3,6 +3,6 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		goto('/2');
+		goto('/3');
 	});
 </script>

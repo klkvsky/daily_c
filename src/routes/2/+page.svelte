@@ -22,7 +22,7 @@
 	<meta name="title" content="Card - Product Feature" />
 	<meta
 		name="description"
-		content="D_003: Card - Product Feature; Design: @predragus; Thank to you all for checking it out"
+		content="D_004: Card - Product Feature; Design: @predragus; Thank to you all for checking it out"
 	/>
 
 	<!-- Open Graph / Facebook -->
@@ -44,7 +44,7 @@
 	<meta property="twitter:title" content="Card - Product Feature" />
 	<meta
 		property="twitter:description"
-		content="D_003: Card - Product Feature; Design: @predragus; Thank to you all for checking it out"
+		content="D_004: Card - Product Feature; Design: @predragus; Thank to you all for checking it out"
 	/>
 	<meta
 		property="twitter:image"
@@ -56,8 +56,10 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/atropos@1.0.2/atropos.min.css" />
 </svelte:head>
 
-<main class="bg-[#0A0A0A] w-screen h-screen grid place-items-center">
-	<div class="atropos my-atropos lg:hover:scale-[1.1] transition-all duration-500 ease-in-out scale-[.7] hover:scale-[.85] lg:scale-100">
+<main class="bg-[#0A0A0A] w-screen h-[90vh] lg:h-screen overflow-hidden grid place-items-center">
+	<div
+		class="atropos my-atropos lg:hover:scale-[1.1] transition-all duration-500 ease-in-out scale-[.6] hover:scale-[.75] lg:scale-100"
+	>
 		<!-- scale container (required) -->
 		<div class="atropos-scale">
 			<!-- rotate container (required) -->
