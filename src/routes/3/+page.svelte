@@ -70,8 +70,8 @@
 <img
 	src="https://s3-alpha-sig.figma.com/img/fe31/918b/1652ce428bd245c8d5a10570494021c0?Expires=1675641600&Signature=Ev09voe8WxwRTLrQNiZX9L3omV9rRMV66HAjgNgu5B0DQgTaG~S~UoexDrzJ0A1yOk9FELHxSOUYeQGaw32duegQQz81iqrQ9zePatuZZUeg1OjzZZVpTKrY4TaRk8jabWoEmNqz3PBxjuMG5mQCDVwLp0fsFIlEAQekHPXxOy3V~zME526sPpkEJ7OZc8Y9wbosxEDMd~ylm5er7g0VEodIbzlO2Fphc2-fLGTyc9DIUTNacXXrgoGjzBv6YFra-t-4J9sbgOFVPwfkQz3tDlbAkFOYzInRUCMueOISVqKe-Sd-9V6wR6eJevA9E~C4W7sXx0xaWi1zcqYHMJMbbA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
 	alt=""
-	class={`fixed top-0 left-0 w-screen h-screen object-cover opacity-[0.44] mix-blend-soft-light z-20 transition-all duration-500 ease-in-out ${
-		status === 'deleted' || status === 'candeled' ? 'pointer-events-none opacity-0' : ''
+	class={`fixed top-0 left-0 w-screen h-screen object-cover opacity-[0.44] mix-blend-soft-light z-20 transition-all duration-500 ease-in-out pointer-events-none ${
+		status === 'deleted' || status === 'candeled' ? 'opacity-0' : ''
 	}`}
 />
 <main class="bg-[#0A0A0A] w-screen h-screen grid place-items-center">
