@@ -44,7 +44,7 @@
 		<!-- rotate container (required) -->
 		<div class="atropos-rotate">
 			<!-- inner container (required) -->
-			<div class="atropos-inner">
+			<div class="atropos-inner rounded-[7px] overflow-hidden ">
 				<!-- put your custom content here -->
 				<button
 					class={`w-[145px] h-[38px] grid place-items-center rounded-[7px] relative p-[1px] overflow-hidden transition-all duration-1000 ease-in-out special-button ${
