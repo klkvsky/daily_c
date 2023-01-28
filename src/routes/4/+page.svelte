@@ -87,7 +87,7 @@
 			<!-- rotate container (required) -->
 			<div class="atropos-rotate">
 				<!-- inner container (required) -->
-				<div class="atropos-inner">gtynmmn
+				<div class="atropos-inner">
 					<!-- put your custom content here -->
 					<div
 						class="grid place-items-center p-[1px] bg-gradient-to-br from-[#AAAAAA]/50 via-[#464646]/50 to-[#606060]/50 w-[400px] h-fit rounded-[16px] group-hover:from-[#AAAAAA] group-hover:via-[#464646] group-hover:to-[#606060] transition-all duration-500 ease-in-out"
