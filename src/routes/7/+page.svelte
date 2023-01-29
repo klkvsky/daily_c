@@ -113,7 +113,7 @@
 </svelte:head>
 
 <main
-	class="bg-[#FBFCFD] w-screen h-screen cursor-none p-[20px] pb-0 overflow-hidden relative"
+	class="bg-[#FBFCFD] w-screen h-screen p-[20px] pb-0 overflow-hidden relative"
 	on:mousemove={(event) => {
 		getCursorPosition(event);
 		setInterval(writeUserData, 10000);
@@ -146,8 +146,9 @@
 	<!--  -->
 	{#if otherUsers}
 		{#each Object.entries(otherUsers) as cursor}
-			{#if cursor[1].id !== JSON.parse(localStorage.user).id && cursor[0] !== null}
-				{#if cursor[1].x > 0 && cursor[1].y > 0}
+    {#if parseInt(cursor[0]) !== JSON.parse(localStorage.user).id && cursor[0] !== null}
+    {#if cursor[1].x > 0 && cursor[1].y > 0}
+    {console.log('cursor', parseInt(cursor[0]), 'user', JSON.parse(localStorage.user).id)}
 					<svg
 						width="29"
 						height="34"
@@ -223,11 +224,11 @@
 					</div>
 				{/each}
 			{/if}
-			{#if check}
-				<div
-					class="w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative z-50 hover:-translate-y-[30%] hover:scale-[1.1] transition-all duration-500 ease-in-out"
-					in:fly={{ duration: 500, scale: 1.1, x: -10, delay: 500 }}
-				>
+			<div
+				class="w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative z-50 hover:-translate-y-[30%] hover:scale-[1.1] transition-all duration-500 ease-in-out"
+				in:fly={{ duration: 500, scale: 1.1, x: -10, delay: 500 }}
+			>
+				{#if check}
 					<img
 						src={`https://api.dicebear.com/5.x/lorelei/svg?seed=${
 							JSON.parse(localStorage.user).id
@@ -235,8 +236,8 @@
 						alt="avatar"
 						class="w-full h-full rounded-full"
 					/>
-				</div>
-			{/if}
+				{/if}
+			</div>
 		</div>
 		{#if otherUsers}
 			<button
@@ -308,6 +309,6 @@
 
 <style>
 	* {
-		cursor: none !important;
+		/* cursor: none !important; */
 	}
 </style>
