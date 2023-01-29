@@ -230,7 +230,9 @@
 					in:fly={{ duration: 500, scale: 1.1, x: -10, delay: 500 }}
 				>
 					<img
-						src={`https://api.dicebear.com/5.x/lorelei/svg?seed=${JSON.parse(localStorage.user).id}`}
+						src={`https://api.dicebear.com/5.x/lorelei/svg?seed=${
+							JSON.parse(localStorage.user).id
+						}`}
 						alt="avatar"
 						class="w-full h-full rounded-full"
 					/>
