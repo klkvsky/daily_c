@@ -116,7 +116,7 @@
 	class="bg-[#FBFCFD] w-screen h-screen p-[20px] pb-0 overflow-hidden relative cursor-none"
 	on:mousemove={(event) => {
 		getCursorPosition(event);
-		// setInterval(writeUserData(), 100000);
+		setInterval(writeUserData(), 100000);
 	}}
 >
 	<!-- Cursor -->
@@ -148,7 +148,6 @@
 		{#each Object.entries(otherUsers) as cursor}
 			{#if parseInt(cursor[0]) !== JSON.parse(localStorage.user).id && cursor[0] !== null}
 				{#if cursor[1].x > 0 && cursor[1].y > 0}
-					{console.log('cursor', parseInt(cursor[0]), 'user', JSON.parse(localStorage.user).id)}
 					<svg
 						width="29"
 						height="34"
@@ -156,7 +155,7 @@
 						fill="none"
 						xmlns="http://www.w3.org/2000/svg"
 						style={`top: ${cursor[1].y}px; left: ${cursor[1].x}px; fill: ${color}`}
-						class="absolute scale-75 z-[100]"
+						class="absolute scale-75 z-[100] "
 					>
 						<path
 							d="M0.798123 3.26497L6.15666 31.8996C6.49328 33.6985 8.86899 34.1379 9.82676 32.5785L16.1766 22.2398C16.4438 21.8048 16.8671 21.4884 17.36 21.3555L27.3387 18.6637C29.0589 18.1996 29.3594 15.8874 27.815 14.999L3.76119 1.16342C2.28138 0.312236 0.484106 1.58694 0.798123 3.26497Z"
