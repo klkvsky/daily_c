@@ -146,7 +146,6 @@
 	<!--  -->
 	{#if otherUsers}
 		{#each Object.entries(otherUsers) as cursor}
-			{console.log('cursor', cursor, 'otherUsers', JSON.parse(localStorage.user))}
 			{#if cursor[1].id !== JSON.parse(localStorage.user).id && cursor[0] !== null}
 				{#if cursor[1].x > 0 && cursor[1].y > 0}
 					<svg
