@@ -113,10 +113,10 @@
 </svelte:head>
 
 <main
-	class="bg-[#FBFCFD] w-screen h-screen p-[20px] pb-0 overflow-hidden relative"
+	class="bg-[#FBFCFD] w-screen h-screen p-[20px] pb-0 overflow-hidden relative cursor-none"
 	on:mousemove={(event) => {
 		getCursorPosition(event);
-		setInterval(writeUserData, 10000);
+		// setInterval(writeUserData(), 100000);
 	}}
 >
 	<!-- Cursor -->
@@ -146,9 +146,9 @@
 	<!--  -->
 	{#if otherUsers}
 		{#each Object.entries(otherUsers) as cursor}
-    {#if parseInt(cursor[0]) !== JSON.parse(localStorage.user).id && cursor[0] !== null}
-    {#if cursor[1].x > 0 && cursor[1].y > 0}
-    {console.log('cursor', parseInt(cursor[0]), 'user', JSON.parse(localStorage.user).id)}
+			{#if parseInt(cursor[0]) !== JSON.parse(localStorage.user).id && cursor[0] !== null}
+				{#if cursor[1].x > 0 && cursor[1].y > 0}
+					{console.log('cursor', parseInt(cursor[0]), 'user', JSON.parse(localStorage.user).id)}
 					<svg
 						width="29"
 						height="34"
@@ -211,17 +211,19 @@
 		<div class="flex flex-row items-center -space-x-8">
 			{#if otherUsers}
 				{#each Object.entries(otherUsers).slice(0, 4) as user, index}
-					<div
-						class={`w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative hover:-translate-y-[30%] hover:scale-[1.1] transition-all duration-500 ease-in-out z-[${
-							40 - index * 10
-						}]`}
-					>
-						<img
-							src={`https://api.dicebear.com/5.x/lorelei/svg?seed=${user[0]}`}
-							alt="avatar"
-							class="w-full h-full  rounded-full"
-						/>
-					</div>
+					{#if parseInt(user[0]) !== JSON.parse(localStorage.user).id}
+						<div
+							class={`w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative hover:-translate-y-[30%] hover:scale-[1.1] transition-all duration-500 ease-in-out hover:z-[60] z-[${
+								40 - index * 10
+							}]`}
+						>
+							<img
+								src={`https://api.dicebear.com/5.x/lorelei/svg?seed=${user[0]}`}
+								alt="avatar"
+								class="w-full h-full rounded-full"
+							/>
+						</div>
+					{/if}
 				{/each}
 			{/if}
 			<div
@@ -309,6 +311,6 @@
 
 <style>
 	* {
-		/* cursor: none !important; */
+		cursor: none !important;
 	}
 </style>
