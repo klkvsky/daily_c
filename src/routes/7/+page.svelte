@@ -1,4 +1,5 @@
 <script>
+	// @ts-nocheck
 	import { onMount } from 'svelte';
 	import { initializeApp } from 'firebase/app';
 	import { getDatabase, ref, set, onValue } from 'firebase/database';
@@ -23,6 +24,8 @@
 		x: 0,
 		y: 0
 	};
+
+	let otherUsers;
 
 	function getCursorPosition(event) {
 		const { clientX, clientY } = event;
@@ -61,7 +64,8 @@
 			generateUserId();
 		}
 
-		getFromDB();
+		// getFromDB();
+		getNumberOfUsers();
 	});
 	function generateUserId() {
 		const userId = Math.floor(Math.random() * 1000000);
@@ -80,7 +84,17 @@
 		const starCountRef = ref(db, 'users/784767');
 		onValue(starCountRef, (snapshot) => {
 			const data = snapshot.val();
+			console.log('data: ', data);
 			otherUser = data;
+		});
+	}
+
+	async function getNumberOfUsers() {
+		const db = getDatabase();
+		const starCountRef = ref(db, 'users');
+		onValue(starCountRef, (snapshot) => {
+			const data = snapshot.val();
+			otherUsers = data;
 		});
 	}
 </script>
@@ -89,7 +103,7 @@
 	class="bg-[#FBFCFD] w-screen h-screen cursor-none p-[20px] pb-0 overflow-hidden"
 	on:mousemove={(event) => {
 		getCursorPosition(event);
-		setInterval(writeUserData, 10000);
+		setInterval(writeUserData, 1000);
 	}}
 >
 	<!-- Cursor -->
@@ -115,28 +129,34 @@
 		</div>
 	{/if}
 	<!--  -->
-	{#if otherUser.x > 0 && otherUser.y > 0}
-		<svg
-			width="29"
-			height="34"
-			viewBox="0 0 29 34"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-			style={`top: ${otherUser.y}px; left: ${otherUser.x}px; fill: ${color}`}
-			class="absolute scale-75 z-[100]"
-		>
-			<path
-				d="M0.798123 3.26497L6.15666 31.8996C6.49328 33.6985 8.86899 34.1379 9.82676 32.5785L16.1766 22.2398C16.4438 21.8048 16.8671 21.4884 17.36 21.3555L27.3387 18.6637C29.0589 18.1996 29.3594 15.8874 27.815 14.999L3.76119 1.16342C2.28138 0.312236 0.484106 1.58694 0.798123 3.26497Z"
-			/>
-		</svg>
-		<div
-			style={`top: ${otherUser.y + 22.5}px; left: ${
-				otherUser.x + 12
-			}px; background-color: ${color}`}
-			class="px-[12px] pt-[6px] pb-[8px] w-fit h-fit rounded-full absolute scale-75 z-[100]"
-		>
-			<p class="text-[20px] font-semibold text-white">{name}</p>
-		</div>
+	{#if otherUsers}
+		{#each Object.entries(otherUsers) as cursor, index}
+			{#if cursor[0] !== localStorage.getItem('userid')}
+				{#if cursor[1].x > 0 && cursor[1].y > 0}
+					<svg
+						width="29"
+						height="34"
+						viewBox="0 0 29 34"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+						style={`top: ${cursor[1].y}px; left: ${cursor[1].x}px; fill: ${color}`}
+						class="absolute scale-75 z-[100]"
+					>
+						<path
+							d="M0.798123 3.26497L6.15666 31.8996C6.49328 33.6985 8.86899 34.1379 9.82676 32.5785L16.1766 22.2398C16.4438 21.8048 16.8671 21.4884 17.36 21.3555L27.3387 18.6637C29.0589 18.1996 29.3594 15.8874 27.815 14.999L3.76119 1.16342C2.28138 0.312236 0.484106 1.58694 0.798123 3.26497Z"
+						/>
+					</svg>
+					<div
+						style={`top: ${cursor[1].y + 22.5}px; left: ${
+							cursor[1].x + 12
+						}px; background-color: ${color}`}
+						class="px-[12px] pt-[6px] pb-[8px] w-fit h-fit rounded-full absolute scale-75 z-[100]"
+					>
+						<p class="text-[20px] font-semibold text-white">{cursor[0]}</p>
+					</div>
+				{/if}
+			{/if}
+		{/each}
 	{/if}
 	<!-- Main content -->
 
