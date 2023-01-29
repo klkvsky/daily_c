@@ -113,7 +113,7 @@
 </svelte:head>
 
 <main
-	class="bg-[#FBFCFD] w-screen h-screen cursor-none p-[20px] pb-0 overflow-hidden"
+	class="bg-[#FBFCFD] w-screen h-screen cursor-none p-[20px] pb-0 overflow-hidden relative"
 	on:mousemove={(event) => {
 		getCursorPosition(event);
 		setInterval(writeUserData, 10000);
@@ -146,7 +146,7 @@
 	<!--  -->
 	{#if otherUsers}
 		{#each Object.entries(otherUsers) as cursor, index}
-			{#if cursor[0] !== localStorage.getItem('userid')}
+			{#if cursor[0] !== JSON.parse(localStorage.user).id || cursor[0] !== null}
 				{#if cursor[1].x > 0 && cursor[1].y > 0}
 					<svg
 						width="29"
@@ -167,7 +167,9 @@
 						}px; background-color: ${color}`}
 						class="px-[12px] pt-[6px] pb-[8px] w-fit h-fit rounded-full absolute scale-75 z-[100]"
 					>
-						<p class="text-[20px] font-semibold text-white">{cursor[0]}</p>
+						<p class="text-[20px] font-semibold text-white">
+							{cursor[1].name === null ? 'Baiel' : cursor[1].name}
+						</p>
 					</div>
 				{/if}
 			{/if}
@@ -206,18 +208,6 @@
 
 	<div class="mt-[100px] w-fit mx-auto flex flex-row items-center">
 		<div class="flex flex-row items-center -space-x-8">
-			{#if check}
-				<div
-					class="w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative z-50 hover:-translate-y-[30%] hover:scale-[1.1] transition-all duration-500 ease-in-out"
-					in:fly={{ duration: 500, scale: 1.1, x: -10, delay: 1000 }}
-				>
-					<img
-						src={`https://api.dicebear.com/5.x/lorelei/svg?seed=${localStorage.userid}`}
-						alt="avatar"
-						class="w-full h-full rounded-full"
-					/>
-				</div>
-			{/if}
 			{#if otherUsers}
 				{#each Object.entries(otherUsers).slice(0, 4) as user, index}
 					<div
@@ -232,6 +222,18 @@
 						/>
 					</div>
 				{/each}
+			{/if}
+			{#if check}
+				<div
+					class="w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative z-50 hover:-translate-y-[30%] hover:scale-[1.1] transition-all duration-500 ease-in-out"
+					in:fly={{ duration: 500, scale: 1.1, x: -10, delay: 500 }}
+				>
+					<img
+						src={`https://api.dicebear.com/5.x/lorelei/svg?seed=${localStorage.userid}`}
+						alt="avatar"
+						class="w-full h-full rounded-full"
+					/>
+				</div>
 			{/if}
 		</div>
 		{#if otherUsers}
