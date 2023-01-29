@@ -221,9 +221,9 @@
 			{#if otherUsers}
 				{#each Object.entries(otherUsers).slice(0, 4) as user, index}
 					<div
-						class={`w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative hover:-translate-y-[30%] hover:scale-[1.1] transition-all duration-500 ease-in-out z-${
+						class={`w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative hover:-translate-y-[30%] hover:scale-[1.1] transition-all duration-500 ease-in-out z-[${
 							40 - index * 10
-						}`}
+						}]`}
 					>
 						<img
 							src={`https://api.dicebear.com/5.x/lorelei/svg?seed=${user[0]}`}
