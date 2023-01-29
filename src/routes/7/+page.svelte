@@ -1,5 +1,7 @@
 <script>
 	// @ts-nocheck
+	import { browser } from '$app/environment';
+	import { scale, draw, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { initializeApp } from 'firebase/app';
 	import { getDatabase, ref, set, onValue } from 'firebase/database';
@@ -20,12 +22,9 @@
 	let color = 'blue';
 	let name = 'Sarah';
 	//
-	let otherUser = {
-		x: 0,
-		y: 0
-	};
-
 	let otherUsers;
+	//
+	let check = false;
 
 	function getCursorPosition(event) {
 		const { clientX, clientY } = event;
@@ -60,32 +59,24 @@
 		getRandomVariables();
 		app = initializeApp(firebaseConfig);
 		database = getDatabase(app);
-		if (localStorage.getItem('userid') === null) {
+		if (localStorage.getItem('user') === null) {
 			generateUserId();
 		}
-
-		// getFromDB();
+		check = true;
 		getNumberOfUsers();
 	});
 	function generateUserId() {
 		const userId = Math.floor(Math.random() * 1000000);
-		localStorage.setItem('userid', JSON.stringify(userId));
+		localStorage.setItem('user', JSON.stringify({ id: userId, name: name, color: color }));
 	}
 
 	function writeUserData() {
 		const db = getDatabase();
 		set(ref(db, 'users/' + localStorage.getItem('userid')), {
 			x: x,
-			y: y
-		});
-	}
-	async function getFromDB() {
-		const db = getDatabase();
-		const starCountRef = ref(db, 'users/784767');
-		onValue(starCountRef, (snapshot) => {
-			const data = snapshot.val();
-			console.log('data: ', data);
-			otherUser = data;
+			y: y,
+			color: color,
+			name: name
 		});
 	}
 
@@ -97,13 +88,35 @@
 			otherUsers = data;
 		});
 	}
+
+	if (browser) {
+		const myAtropos = Atropos({
+			el: '.my-atropos',
+			rotateXInvert: true,
+			rotateYInvert: true,
+			shadow: true,
+			shadowOffset: 50,
+			shadowScale: 5,
+			activeOffset: 0.09,
+			highlight: true,
+			rotateXMax: 6,
+			rotateYMax: 6
+		});
+	}
 </script>
+
+<svelte:head>
+	<!--  -->
+	<script src="https://cdn.jsdelivr.net/npm/atropos@1.0.2/atropos.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/atropos@1.0.2/atropos.min.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/atropos@1.0.2/atropos.min.css" />
+</svelte:head>
 
 <main
 	class="bg-[#FBFCFD] w-screen h-screen cursor-none p-[20px] pb-0 overflow-hidden"
 	on:mousemove={(event) => {
 		getCursorPosition(event);
-		setInterval(writeUserData, 1000);
+		setInterval(writeUserData, 10000);
 	}}
 >
 	<!-- Cursor -->
@@ -114,18 +127,20 @@
 			viewBox="0 0 29 34"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
-			style={`top: ${y}px; left: ${x}px; fill: ${color}`}
-			class="absolute scale-75 z-[100]"
+			style={`top: ${y}px; left: ${x}px; fill: ${JSON.parse(localStorage.user).color}`}
+			class="absolute scale-75 z-[100] pointer-events-none"
 		>
 			<path
 				d="M0.798123 3.26497L6.15666 31.8996C6.49328 33.6985 8.86899 34.1379 9.82676 32.5785L16.1766 22.2398C16.4438 21.8048 16.8671 21.4884 17.36 21.3555L27.3387 18.6637C29.0589 18.1996 29.3594 15.8874 27.815 14.999L3.76119 1.16342C2.28138 0.312236 0.484106 1.58694 0.798123 3.26497Z"
 			/>
 		</svg>
 		<div
-			style={`top: ${y + 22.5}px; left: ${x + 12}px; background-color: ${color}`}
-			class="px-[12px] pt-[6px] pb-[8px] w-fit h-fit rounded-full absolute scale-75 z-[100]"
+			style={`top: ${y + 22.5}px; left: ${x + 12}px; background-color: ${
+				JSON.parse(localStorage.user).color
+			}`}
+			class="px-[12px] pt-[6px] pb-[8px] w-fit h-fit rounded-full absolute scale-75 z-[100] pointer-events-none"
 		>
-			<p class="text-[20px] font-semibold text-white">{name}</p>
+			<p class="text-[20px] font-semibold text-white">{JSON.parse(localStorage.user).name}</p>
 		</div>
 	{/if}
 	<!--  -->
@@ -191,79 +206,100 @@
 
 	<div class="mt-[100px] w-fit mx-auto flex flex-row items-center">
 		<div class="flex flex-row items-center -space-x-8">
-			<div
-				class="w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative z-50"
-			>
-				<div class="w-full h-full bg-neutral-500 rounded-full" />
-			</div>
-			<div
-				class="w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative z-40"
-			>
-				<div class="w-full h-full bg-neutral-500 rounded-full" />
-			</div>
-			<div
-				class="w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative z-30"
-			>
-				<div class="w-full h-full bg-neutral-500 rounded-full" />
-			</div>
-			<div
-				class="w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative z-20"
-			>
-				<div class="w-full h-full bg-neutral-500 rounded-full" />
-			</div>
-			<div
-				class="w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative z-10"
-			>
-				<div class="w-full h-full bg-neutral-500 rounded-full" />
-			</div>
+			{#if check}
+				<div
+					class="w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative z-50 hover:-translate-y-[30%] hover:scale-[1.1] transition-all duration-500 ease-in-out"
+					in:fly={{ duration: 500, scale: 1.1, x: -10, delay: 1000 }}
+				>
+					<img
+						src={`https://api.dicebear.com/5.x/lorelei/svg?seed=${localStorage.userid}`}
+						alt="avatar"
+						class="w-full h-full rounded-full"
+					/>
+				</div>
+			{/if}
+			{#if otherUsers}
+				{#each Object.entries(otherUsers).slice(0, 4) as user, index}
+					<div
+						class={`w-[64px] h-[64px] rounded-full bg-white border border-[#DFE3E6] p-[4px] relative hover:-translate-y-[30%] hover:scale-[1.1] transition-all duration-500 ease-in-out z-${
+							40 - index * 10
+						}`}
+					>
+						<img
+							src={`https://api.dicebear.com/5.x/lorelei/svg?seed=${user[0]}`}
+							alt="avatar"
+							class="w-full h-full  rounded-full"
+						/>
+					</div>
+				{/each}
+			{/if}
 		</div>
-		<button
-			class="text-[#687076] text-semibold text-[20px] border border-[#DFE3E6] px-[12px] pt-[6px] pb-[8px] rounded-full ml-[12px]"
-		>
-			+ 396 more
-		</button>
+		{#if otherUsers}
+			<button
+				class="text-[#687076] text-semibold text-[20px] border border-[#DFE3E6] px-[12px] pt-[6px] pb-[8px] rounded-full ml-[12px] hover:border-[#101010] transition-all duration-300 ease-in-out hover:text-[#101010] hover:scale-[1.05]"
+			>
+				+ {Object.entries(otherUsers).length} more
+			</button>
+		{/if}
 	</div>
 
 	<div class="flex flex-col mt-[48px] items-center">
 		<h1 class="font-bold text-[#101010] text-[64px] text-center relative w-fit">
 			10X Your Design Mastery
-			<svg
-				width="252"
-				height="24"
-				viewBox="0 0 252 24"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-				class="absolute -bottom-[10px] left-0"
-			>
-				<path
-					d="M174.723 22C146.218 15.7811 114.397 19.1555 85.5563 19.7266C77.2633 19.891 68.7785 20.9871 60.4935 20.5178C59.4129 20.4568 54.6985 20.2281 53.8141 19.0059C53.6986 18.8469 57.3749 18.2197 59.1609 17.9514C62.6337 17.4297 66.1049 17.0449 69.5748 16.4939C78.6973 15.0463 87.9792 14.3401 97.1816 13.6894C120.804 12.0205 163.063 6.87752 186.15 14.1303C187.294 14.4897 183.758 14.0685 182.561 14.0351C180.596 13.9807 178.631 13.902 176.665 13.839C170.253 13.6342 163.786 13.2699 157.373 13.3272C136.707 13.5106 115.967 12.6296 95.3055 13.4187C89.0885 13.6564 82.8912 14.1501 76.6714 14.3409C73.0686 14.4513 73.23 14.5449 69.5065 14.4159C67.8921 14.3599 63.4155 14.8556 64.6923 13.8456C66.9411 12.0663 73.9699 12.5113 76.6883 12.1483C89.1006 10.4926 101.482 8.33046 113.958 7.16884C145.946 4.19041 178.512 4.1834 210.573 5.42949C223.689 5.93922 236.94 3.9675 250 5.56055C218.312 1.38424 185.374 1.9772 153.512 2.09794C117.639 2.23392 81.8054 2.24298 45.931 3.01438C31.2032 3.33084 16.7726 6.19298 2 5.98406"
-					stroke="#5D64F6"
-					stroke-width="3"
-					stroke-miterlimit="1.5"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-			</svg>
+			{#if check}
+				<svg
+					width="252"
+					height="24"
+					viewBox="0 0 252 24"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+					class="absolute -bottom-[10px] left-0"
+				>
+					<path
+						in:draw={{ duration: 1000, delay: 1500 }}
+						d="M174.723 22C146.218 15.7811 114.397 19.1555 85.5563 19.7266C77.2633 19.891 68.7785 20.9871 60.4935 20.5178C59.4129 20.4568 54.6985 20.2281 53.8141 19.0059C53.6986 18.8469 57.3749 18.2197 59.1609 17.9514C62.6337 17.4297 66.1049 17.0449 69.5748 16.4939C78.6973 15.0463 87.9792 14.3401 97.1816 13.6894C120.804 12.0205 163.063 6.87752 186.15 14.1303C187.294 14.4897 183.758 14.0685 182.561 14.0351C180.596 13.9807 178.631 13.902 176.665 13.839C170.253 13.6342 163.786 13.2699 157.373 13.3272C136.707 13.5106 115.967 12.6296 95.3055 13.4187C89.0885 13.6564 82.8912 14.1501 76.6714 14.3409C73.0686 14.4513 73.23 14.5449 69.5065 14.4159C67.8921 14.3599 63.4155 14.8556 64.6923 13.8456C66.9411 12.0663 73.9699 12.5113 76.6883 12.1483C89.1006 10.4926 101.482 8.33046 113.958 7.16884C145.946 4.19041 178.512 4.1834 210.573 5.42949C223.689 5.93922 236.94 3.9675 250 5.56055C218.312 1.38424 185.374 1.9772 153.512 2.09794C117.639 2.23392 81.8054 2.24298 45.931 3.01438C31.2032 3.33084 16.7726 6.19298 2 5.98406"
+						stroke="#5D64F6"
+						stroke-width="3"
+						stroke-miterlimit="1.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				</svg>
+			{/if}
 		</h1>
 		<p class="text-[24px] font-semibold text-[#687076] max-w-[550px] text-center mt-[20px]">
 			10X empowers designers to level up their work and career by offering lessons, live workshops,
 			design critiques, and a whole lot more!
 		</p>
-		<button
-			class="bg-[#5D64F6] px-[24px] pt-[14px] pb-[16px] rounded-[10px] text-white border-[2px] border-[#DFE1FF] font-bold text-[20px] mt-[20px]"
+		<div class="atropos my-atropos hover:scale-[1.1] transition-all duration-300 ease-in-out">
+			<div class="atropos-scale ">
+				<div class="atropos-rotate ">
+					<div class="atropos-inner">
+						<button
+							class="bg-[#5D64F6] px-[24px] pt-[14px] pb-[16px] rounded-[10px] text-white border-[2px] border-[#DFE1FF] font-bold text-[20px] mt-[20px]"
+						>
+							Become a Member
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{#if check}
+		<div
+			class="w-[1040px] h-auto aspect-video border bg-white border-[#DFE3E6] rounded-[20px] p-[10px] mx-auto mt-[95px] hover:-translate-y-[80%] transition-all duration-1000 ease-in-out peer z-[60] hover:z-[90] hover:scale-[1.2] relative group"
+			in:fly={{ duration: 1000, y: 100 }}
 		>
-			Become a Member
-		</button>
-	</div>
+			<img
+				src="https://s3-alpha-sig.figma.com/img/a30b/5801/b7312c66dd4b63010c5d58f489530fcc?Expires=1675641600&Signature=GZgw1PV2ohSlAIomV26FDUzK9KeqMle3qp2Q6bvdYh0qWnElfoYj2Ag-~BHoOEvv4wgo1SQS5v2Pg25xrkzAd95VCEenM78B3uMjdAd5fdURIrI1nTmKvWiQCBRwraxgY5vE7kKiwc0FDBEzqJpJa9sxkfV9SF66T3OJjP2IToqguVb~OfxFNOoXwFIqmVhCJlFeLuJZOMdwd89zNMI5U5iaLcUWD~DL6xfmITo25LGy62jArtozZyktAkbBMKgg3mYnEqL8T~FJY6pWoMBN5sE53KbCxA~~LtVxPCxMKA6l8yo5hYyk7qgH6jFhaQ8rsbUuFN5TG3jx4gY8DopRMg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+				alt="video"
+				class="w-full h-full rounded-[10px]"
+			/>
+		</div>
+	{/if}
 	<div
-		class="w-[1040px] h-auto aspect-video border border-[#DFE3E6] rounded-[20px] p-[10px] mx-auto mt-[95px]"
-	>
-		<img
-			src="https://s3-alpha-sig.figma.com/img/a30b/5801/b7312c66dd4b63010c5d58f489530fcc?Expires=1675641600&Signature=GZgw1PV2ohSlAIomV26FDUzK9KeqMle3qp2Q6bvdYh0qWnElfoYj2Ag-~BHoOEvv4wgo1SQS5v2Pg25xrkzAd95VCEenM78B3uMjdAd5fdURIrI1nTmKvWiQCBRwraxgY5vE7kKiwc0FDBEzqJpJa9sxkfV9SF66T3OJjP2IToqguVb~OfxFNOoXwFIqmVhCJlFeLuJZOMdwd89zNMI5U5iaLcUWD~DL6xfmITo25LGy62jArtozZyktAkbBMKgg3mYnEqL8T~FJY6pWoMBN5sE53KbCxA~~LtVxPCxMKA6l8yo5hYyk7qgH6jFhaQ8rsbUuFN5TG3jx4gY8DopRMg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-			alt="video"
-			class="w-full h-full rounded-[10px]"
-		/>
-	</div>
+		class="w-screen h-screen bg-black/0 peer-hover:bg-black/50 absolute top-0 left-0 pointer-events-none transition-all duration-1000 ease-in-out z-[60]"
+	/>
 </main>
 
 <style>
