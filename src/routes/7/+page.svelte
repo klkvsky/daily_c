@@ -72,7 +72,7 @@
 
 	function writeUserData() {
 		const db = getDatabase();
-		set(ref(db, 'users/' + localStorage.getItem('userid')), {
+		set(ref(db, 'users/' + JSON.parse(localStorage.getItem('user')).id), {
 			x: x,
 			y: y,
 			color: color,
@@ -145,8 +145,9 @@
 	{/if}
 	<!--  -->
 	{#if otherUsers}
-		{#each Object.entries(otherUsers) as cursor, index}
-			{#if cursor[0] !== JSON.parse(localStorage.user).id || cursor[0] !== null}
+		{#each Object.entries(otherUsers) as cursor}
+			{console.log('cursor', cursor, 'otherUsers', JSON.parse(localStorage.user))}
+			{#if cursor[0] !== JSON.parse(localStorage.user).id && cursor[0] !== null}
 				{#if cursor[1].x > 0 && cursor[1].y > 0}
 					<svg
 						width="29"
