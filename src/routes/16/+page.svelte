@@ -69,7 +69,6 @@
 <main class="w-screen h-screen grid place-items-center bg-[#E0E0E0]">
 	<button
 		class="w-[300px] h-[100px] relative transition-all ease-in-out group"
-		disabled={isEraser}
 		on:click={(event) => {
 			if (!isEraser) {
 				createDivs(event);
@@ -155,15 +154,19 @@
 		</div>
 		<video
 			bind:this={videoSource}
-			class="min-w-[350px] h-[150px] absolute top-[50%] left-[50%] -translate-x-1/2 rounded-[100px] -scale-x-100 object-fill -translate-y-1/2 opacity-40 transition-all blur-[24px] group-active:opacity-10"
+			class={`min-w-[350px] h-[150px] absolute top-[50%] left-[50%] -translate-x-1/2 rounded-[100px] -scale-x-100 object-fill -translate-y-1/2 opacity-40 transition-all blur-[24px] ${
+				isEraser ? ' ' : 'group-active:opacity-10'
+			}`}
 			playsinline={true}
 			muted
 		/>
 		<div
-			class="w-[300px] h-[100px] rounded-[56px] transition-all cursor-pointer group-active:scale-[0.96] group-active:shadow-[0_-2px_1px_#ffffff80,0_-1px_1px_#00000080,0_-4px_1px_#ffffff80,0_4px_1px_#ffffff80,0_1px_1px_#00000080,0_4px_1px_#ffffff80]"
-			style="translateZ(0); 
-  position: relative;
-  overflow: hidden;"
+			class={`w-[300px] h-[100px] rounded-[70px] transition-all cursor-pointer transform-gpu ${
+				isEraser
+					? ' '
+					: 'group-active:scale-[0.96] group-active:shadow-[0_-2px_1px_#ffffff80,0_-1px_1px_#00000080,0_-4px_1px_#ffffff80,0_4px_1px_#ffffff80,0_1px_1px_#00000080,0_4px_1px_#ffffff80]'
+			}`}
+			style="translateZ(0); position: relative; overflow: hidden;"
 			on:mousemove={(event) => {
 				mouseX = event.layerX + 5;
 				mouseY = event.layerY + 5;
@@ -174,22 +177,24 @@
 			}}
 		>
 			<video
-				class="shadow-[0_4px_8px_#00000040,0_8px_16px_#00000026,0_16px_32px #00000020] blur-[3px] saturate-[0.4] brightness-[1.1] min-w-full min-h-full -scale-x-125 scale-y-[1.25] object-cover opacity-[0.7] overflow-hidden rounded-[56px]"
-				style="object-position: 0px -120px; position: absolute;
-  height: 100%;
-  height: 100%;
-  left: 50%;
-  transform: translateX(-50%);"
+				class="shadow-[0_4px_8px_#00000040,0_8px_16px_#00000026,0_16px_32px #00000020] blur-[3px] saturate-[0.4] brightness-[1.1] min-w-full min-h-full -scale-x-125 scale-y-[1.25] object-cover opacity-[0.7] overflow-hidden rounded-[100px] w-full h-full absolute"
+				style="object-position: 0px -120px; left: 100%; transform: translateX(-100%);"
 				playsinline={true}
 				muted
 				bind:this={videoSource2}
 			/>
 			<div
-				class="absolute top-0 left-0 w-full h-full opacity-70 rounded-[56px] transition-all shadow-[inset_0_2px_2px_#fff,inset_0_2px_2px_#fffc,inset_0_-2px_2px_#ffffff80] group-active:shadow-[inset_0_4px_8px_#0000001a,inset_0_4px_4px_#0003,inset_0_-6px_8px_#0000001a]"
+				class={`absolute top-0 left-0 w-full h-full opacity-70 rounded-[56px] transition-all shadow-[inset_0_2px_2px_#fff,inset_0_2px_2px_#fffc,inset_0_-2px_2px_#ffffff80] ${
+					isEraser
+						? ' '
+						: 'group-active:shadow-[inset_0_4px_8px_#0000001a,inset_0_4px_4px_#0003,inset_0_-6px_8px_#0000001a]'
+				}`}
 			/>
 		</div>
 		<div
-			class="cursor-pointer pointer-events-none text-[#000000b3] text-[48px] font-medium absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 group-active:scale-[0.96] transition-all ease-in-out z-[200]"
+			class={`cursor-pointer pointer-events-none text-[#000000b3] text-[48px] font-medium absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 transition-all ease-in-out z-[200] ${
+				isEraser ? ' ' : 'group-active:scale-[0.96]'
+			}`}
 			style="filter: drop-shadow(0px -1px 0px rgba(255,255,255,.5)) drop-shadow(0px 1px 0px rgba(255,255,255,.6));"
 		>
 			Button
