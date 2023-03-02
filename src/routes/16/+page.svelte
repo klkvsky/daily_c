@@ -69,6 +69,7 @@
 <main class="w-screen h-screen grid place-items-center bg-[#E0E0E0]">
 	<button
 		class="w-[300px] h-[100px] relative transition-all ease-in-out group"
+		disabled={isEraser}
 		on:click={(event) => {
 			if (!isEraser) {
 				createDivs(event);
@@ -171,7 +172,7 @@
 			}}
 		>
 			<video
-				class="shadow-[0_4px_8px_#00000040,0_8px_16px_#00000026,0_16px_32px #00000020] blur-[3px] saturate-[0.4] brightness-[1.1] min-w-full min-h-full -scale-x-125 scale-y-[1.25] object-cover opacity-[0.7]"
+				class="shadow-[0_4px_8px_#00000040,0_8px_16px_#00000026,0_16px_32px #00000020] blur-[3px] saturate-[0.4] brightness-[1.1] min-w-full min-h-full -scale-x-125 scale-y-[1.25] object-cover opacity-[0.7] overflow-hidden"
 				style="content: normal; object-position: 0px -120px;"
 				playsinline={true}
 				muted
