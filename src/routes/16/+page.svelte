@@ -160,8 +160,10 @@
 			muted
 		/>
 		<div
-			class="w-full h-full overflow-hidden rounded-[56px] transition-all cursor-pointer group-active:scale-[0.96] group-active:shadow-[0_-2px_1px_#ffffff80,0_-1px_1px_#00000080,0_-4px_1px_#ffffff80,0_4px_1px_#ffffff80,0_1px_1px_#00000080,0_4px_1px_#ffffff80]"
-			style="translateZ(0)"
+			class="w-[300px] h-[100px] rounded-[56px] transition-all cursor-pointer group-active:scale-[0.96] group-active:shadow-[0_-2px_1px_#ffffff80,0_-1px_1px_#00000080,0_-4px_1px_#ffffff80,0_4px_1px_#ffffff80,0_1px_1px_#00000080,0_4px_1px_#ffffff80]"
+			style="translateZ(0); 
+  position: relative;
+  overflow: hidden;"
 			on:mousemove={(event) => {
 				mouseX = event.layerX + 5;
 				mouseY = event.layerY + 5;
@@ -173,7 +175,11 @@
 		>
 			<video
 				class="shadow-[0_4px_8px_#00000040,0_8px_16px_#00000026,0_16px_32px #00000020] blur-[3px] saturate-[0.4] brightness-[1.1] min-w-full min-h-full -scale-x-125 scale-y-[1.25] object-cover opacity-[0.7] overflow-hidden rounded-[56px]"
-				style="content: normal; object-position: 0px -120px;"
+				style="object-position: 0px -120px; position: absolute;
+  height: 100%;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);"
 				playsinline={true}
 				muted
 				bind:this={videoSource2}
